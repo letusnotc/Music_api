@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Downloader</title>
+    <script>
+        async function downloadMusic() {
+            const songName = document.getElementById('song-name').value;
+            
+            if (!songName) {
+                alert('Please enter a song name!');
+                return;
+            }
+
+            const response = await fetch('https://music-api-vmfp.onrender.com/download_music', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ song_name: songName }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // If the response is successful
+                alert(`✅ Downloaded: ${result.file}`);
+            } else {
+                // Handle errors
+                alert(`❌ Error: ${result.detail || 'Something went wrong!'}`);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Music Downloader</h1>
+        <input type="text" id="song-name" placeholder="Enter song name" style="padding: 10px; width: 300px;">
+        <button onclick="downloadMusic()" style="padding: 10px 20px; margin-top: 10px;">Download</button>
+    </div>
+</body>
+</html>
