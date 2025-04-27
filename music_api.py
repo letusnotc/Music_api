@@ -14,6 +14,11 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+# Root endpoint to avoid 404 error
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Music Download API!"}
+
 class SongRequest(BaseModel):
     song_name: str
 
